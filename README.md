@@ -8,8 +8,7 @@ To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
 ```
-  node js
-  npm
+  You need Ruby installed
 
 ```
 ### Setup
@@ -20,19 +19,6 @@ Clone the repository and change the directory to portfolio
 
   `$ cd school-library`
 
-```
-
-### Install
-Install all project dependencies by running the command below
- 
-``` 
- ` $ npm install`
-```
-### Usage
-
-Run
-``` 
-  `$ npm start or deploy the index.html from the build/public folder 
 ```
 
 ## Authors
