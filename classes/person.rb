@@ -1,9 +1,12 @@
-require 'securerandom'
-require './nameable'
+# require_relative 'securerandom'
+require_relative 'nameable'
+require_relative 'capitalize_decorator'
+require_relative 'trimmer_decorator'
+require_relative 'base_decorator'
 
 class Person < Nameable
   def initialize(age, name, parent_permission: true)
-    @id = SecureRandom.uuid
+    @id = rand(1..1000)
     @name = name
     @age = age
     @parent_permission = parent_permission
@@ -26,3 +29,11 @@ class Person < Nameable
     @age >= 18
   end
 end
+
+person = Person.new(22, 'maximilianus')
+puts person.correct_name
+
+capitalizedPerson = CapitalizeDecorator.new(person)
+puts capitalizedPerson.correct_name
+capitalizedTrimmedPerson = TrimmerDecorator.new(capitalizedPerson)
+puts capitalizedTrimmedPerson.correct_name
