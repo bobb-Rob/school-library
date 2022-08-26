@@ -1,6 +1,6 @@
 require_relative 'app'
 
-class Temp_main
+class TempMain
   def self.display_options
     puts 'Please choose an option by entering a number:
     1 - List all books.
@@ -18,7 +18,7 @@ class Temp_main
   loop do
     case display_options
     when 1
-     app.list_books
+      app.list_books
     when 2
       app.list_people
     when 3
@@ -43,7 +43,7 @@ class Temp_main
 end
 
 def main
-  Temp_main.new
+  TempMain.new
 end
 
-main()
+main
