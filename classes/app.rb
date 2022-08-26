@@ -59,5 +59,25 @@ class App
     puts 'New teacher created successfully'
   end
 
-  
+  # Create new person method
+  def create_person
+    puts "\n"
+    print 'Do you want to create a student (1) or a teacher (2) ? [Input a number] : '
+    puts "\n"
+    choice = gets.chomp
+    case choice
+    when '1'
+      create_student
+    when '2'
+      create_teacher
+    else
+      puts "\n"
+      puts 'Please enter a valid number [1 or 2]'
+      puts "\n"
+      return
+    end
+    puts "\n"
+    puts 'Person created successfully'
+  end
+
 end
