@@ -1,3 +1,4 @@
+require 'date'
 require_relative 'book'
 require_relative 'person'
 require_relative 'student'
@@ -19,6 +20,9 @@ class App
 
     book = Book.new(title, author)
     @books.push(book)
+    puts "\n"
+    puts "Book successfully created"
+    puts "\n"
   end
 
   def list_books
@@ -72,9 +76,11 @@ class App
   # Create new rental method
   def create_rental
     if @books.size.zero?
-      puts 'No books in the library'
+      puts "\n No books in the library\n"
     elsif @people.size.zero?
+      puts "\n"
       puts 'No one registered in the library'
+      puts "\n"
     else
       create_rental_helper
     end
@@ -92,10 +98,10 @@ class App
       end
       puts "\n"
       print "Enter person\'s ID :"
-      person = gets.chomp
+      person_id = gets.chomp
       puts "\n"
       @rentals.each do |rental|
-        if rental.person.id.to_i == person.to_i
+        if rental.person.id.to_i == person_id.to_i
           puts "Date : #{rental.date}, Book \"#{rental.book.title}\" by : #{rental.book.author}"
         end
       end
@@ -104,31 +110,59 @@ class App
 
   private
 
+  def valid_date?( str, format="%Y/%m/%d" )
+    Date.strptime(str,format) rescue false
+  end
+
+  def number?(obj)
+    obj = obj.to_s unless obj.is_a? String
+    /\A[+-]?\d+(\.[\d]+)?\z/.match(obj)
+  end
+
   # create new student method
   def create_student
     print 'Name: '
     name = gets.chomp
-    print 'Age: '
-    age = gets.chomp
-
-    student = Student.new(age, name, nil)
-    @people << student
-    puts "\n"
-    puts 'New student created successfully'
+    check_age = lambda do
+      print 'Age: '
+      age = gets.chomp
+      puts "\n"
+      if number? age
+        student = Student.new(age, name, nil)
+        @people << student
+        puts "\n"
+        puts 'New student created successfully'
+      else
+        puts "Please input a number as age must be a number"
+        puts "\n"
+        check_age.call
+      end
+    end
+    check_age.call
   end
 
   # create new teacher method
   def create_teacher
     print 'Name: '
     name = gets.chomp
-    print 'Age: '
-    age = gets.chomp
-    print 'Specialization: '
-    specialization = gets.chomp
-    teacher = Teacher.new(specialization, age, name)
-    @people << teacher
-    puts "\n"
-    puts 'New teacher created successfully'
+    check_age = lambda do
+      print 'Age: '
+      age = gets.chomp
+      puts "\n"
+      if number? age
+        print 'Specialization: '
+        specialization = gets.chomp
+        teacher = Teacher.new(specialization, age, name)
+        @people << teacher
+        puts "\n"
+        puts 'New teacher created successfully'
+      else
+        puts "Please input a number as age must be a number"
+        puts "\n"
+        check_age.call
+      end
+    end
+    check_age.call
   end
 
   def create_rental_helper
@@ -147,13 +181,20 @@ class App
     end
     puts "\n"
     rental_person = gets.chomp.to_i
-    print 'Date (YYYY/MM/DD) : '
-    date = gets.chomp.to_s
-
-    # Instantiating a rental object
-    rental_obj = Rental.new(date, @books[marked_book - 1], @people[rental_person - 1])
-    @rentals.push(rental_obj)
-    puts "\n"
-    puts 'Rental created successfully'
+    check_date = lambda do
+      print 'Date (YYYY/MM/DD) : '
+      date = gets.chomp.to_s
+      if valid_date? date
+        rental_obj = Rental.new(date, @books[marked_book - 1], @people[rental_person - 1])
+        @rentals.push(rental_obj)
+        puts "\n"
+        puts 'Rental created successfully'
+      else
+        puts 'Invalid Date or format: please enter correct date'
+        puts "\n"
+        check_date.call
+      end
+    end    
+    check_date.call
   end
 end
