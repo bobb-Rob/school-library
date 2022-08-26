@@ -32,4 +32,17 @@ class App
     end
   end
 
+  # create new student method
+  def create_student
+    print 'Name: '
+    name = gets.chomp
+    print 'Age: '
+    age = gets.chomp
+
+    student = Student.new(age, name, nil)
+    @people << student
+    puts "\n"
+    puts 'New student created successfully'
+  end
+
 end
