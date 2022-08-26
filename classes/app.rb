@@ -80,4 +80,16 @@ class App
     puts 'Person created successfully'
   end
 
+  # List all people method
+  def list_people
+    if @people.empty?
+      puts "\n"
+      puts 'No person is registered in the library'
+      return
+    end
+    @people.each do |person|
+      puts "[#{person.class}] Name : #{person.name} | ID : #{person.id} | Age : #{person.age}"
+    end
+  end
+
 end
