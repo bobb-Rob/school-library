@@ -1,4 +1,3 @@
-# require_relative 'securerandom'
 require_relative 'nameable'
 require_relative 'capitalize_decorator'
 require_relative 'trimmer_decorator'
