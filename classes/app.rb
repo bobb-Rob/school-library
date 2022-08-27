@@ -130,8 +130,7 @@ class App
         puts "\n"
         check_age.call
       end
-    end
-    check_age.call
+    end    
   end
 
   def create_teacher
@@ -167,7 +166,7 @@ class App
     puts "\n"
     puts 'Select a person from the following list by number (not id)'
     puts "\n"
-    @people.each_with_index do |person, index|
+    @people.each_with_index do |index|
       puts "No. #{index + 1}) - Name : #{person.name} |ID : #{person.id} | Age : #{person.age}"
     end
     puts "\n"
