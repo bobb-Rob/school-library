@@ -5,6 +5,7 @@ require_relative 'student'
 require_relative 'teacher'
 require_relative 'rental'
 
+# rubocop:disable Metrics/MethodLength, Metrics/ClassLength
 class App
   def initialize
     @books = []
@@ -17,11 +18,10 @@ class App
     title = gets.chomp
     print 'Author : '
     author = gets.chomp
-
     book = Book.new(title, author)
     @books.push(book)
     puts "\n"
-    puts "Book successfully created"
+    puts 'Book successfully created'
     puts "\n"
   end
 
@@ -37,9 +37,7 @@ class App
     puts "\n"
   end
 
-  # Create new person method
   def create_person
-    puts "\n"
     print 'Do you want to create a student (1) or a teacher (2) ? [Input a number] : '
     puts "\n"
     get_choice = lambda do
@@ -60,10 +58,8 @@ class App
     get_choice.call
   end
 
-  # List all people method
   def list_people
     if @people.empty?
-      puts "\n"
       puts 'No person is registered in the library'
       return
     end
@@ -73,12 +69,10 @@ class App
     end
   end
 
-  # Create new rental method
   def create_rental
     if @books.size.zero?
       puts "\n No books in the library\n"
     elsif @people.size.zero?
-      puts "\n"
       puts 'No one registered in the library'
       puts "\n"
     else
@@ -86,7 +80,6 @@ class App
     end
   end
 
-  # List all rentals method
   def list_rentals
     puts "\n"
     if @rentals.empty?
@@ -99,7 +92,6 @@ class App
       puts "\n"
       print "Enter person\'s ID :"
       person_id = gets.chomp
-      puts "\n"
       @rentals.each do |rental|
         if rental.person.id.to_i == person_id.to_i
           puts "Date : #{rental.date}, Book \"#{rental.book.title}\" by : #{rental.book.author}"
@@ -110,16 +102,17 @@ class App
 
   private
 
-  def valid_date?( str, format="%Y/%m/%d" )
-    Date.strptime(str,format) rescue false
+  def valid_date?(str, format = '%Y/%m/%d')
+    Date.strptime(str, format)
+  rescue StandardError
+    false
   end
 
   def number?(obj)
     obj = obj.to_s unless obj.is_a? String
-    /\A[+-]?\d+(\.[\d]+)?\z/.match(obj)
+    /\A[+-]?\d+(\.\d+)?\z/.match(obj)
   end
 
-  # create new student method
   def create_student
     print 'Name: '
     name = gets.chomp
@@ -133,7 +126,7 @@ class App
         puts "\n"
         puts 'New student created successfully'
       else
-        puts "Please input a number as age must be a number"
+        puts 'Please input a number as age must be a number'
         puts "\n"
         check_age.call
       end
@@ -141,7 +134,6 @@ class App
     check_age.call
   end
 
-  # create new teacher method
   def create_teacher
     print 'Name: '
     name = gets.chomp
@@ -157,7 +149,7 @@ class App
         puts "\n"
         puts 'New teacher created successfully'
       else
-        puts "Please input a number as age must be a number"
+        puts 'Please input a number as age must be a number'
         puts "\n"
         check_age.call
       end
@@ -168,7 +160,6 @@ class App
   def create_rental_helper
     puts "\n"
     puts 'Select a book from the following list by number'
-
     @books.each_with_index do |book, index|
       puts "No. #{index + 1}) - Book Title : #{book.title} | Author : #{book.author}"
     end
@@ -194,7 +185,8 @@ class App
         puts "\n"
         check_date.call
       end
-    end    
+    end
     check_date.call
   end
 end
+# rubocop:enable Metrics/MethodLength, Metrics/ClassLength
